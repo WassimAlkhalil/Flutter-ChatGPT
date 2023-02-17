@@ -3,8 +3,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:thinktaktic/Home/mode.dart';
-import 'package:thinktaktic/MainPage/main_page.dart';
+import 'package:chatgpt/Home/mode.dart';
+import 'package:chatgpt/MainPage/main_page.dart';
 
 import 'Splash Screen/splash_screen.dart';
 

@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:thinktaktic/MainPage/verify_email.dart';
-import 'package:thinktaktic/Splash%20Screen/splash_screen.dart';
+import 'package:chatgpt/MainPage/verify_email.dart';
+import 'package:chatgpt/Splash%20Screen/splash_screen.dart';
 
 class MainPage extends StatelessWidget {
   const MainPage({Key? key}) : super(key: key);

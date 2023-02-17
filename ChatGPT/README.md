@@ -1,4 +1,4 @@
-# thinktaktic
+# chatgpt
 
 A new Flutter project.
 
