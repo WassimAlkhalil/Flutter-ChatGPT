@@ -2,15 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:social_login_buttons/social_login_buttons.dart';
-import 'package:thinktaktic/Home/home.dart';
-import 'package:thinktaktic/Services/google_service.dart';
 
 import '../../Components/my_alert_dialog.dart';
 import '../../Components/my_animated_text_kit.dart';
 import '../../Components/my_text_form_field_email.dart';
 import '../../Components/my_text_form_field_password.dart';
+import '../../Home/home.dart';
+import '../../Services/google_service.dart';
 import '../ResetPassword/reset_password.dart';
-
 
 class SignIn extends StatefulWidget {
   const SignIn({Key? key, required this.showSignUp}) : super(key: key);

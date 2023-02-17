@@ -1,7 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:thinktaktic/MainPage/auth_page.dart';
+
+import '../MainPage/auth_page.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

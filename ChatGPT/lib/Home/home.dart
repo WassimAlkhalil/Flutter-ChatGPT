@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import '../Components/my_chat_input_field.dart';
 import '../Drawer/drawer.dart';
@@ -14,22 +15,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final List<String> conversations = [];
-
-  void addConversation() {
-    setState(
-      () {
-        conversations.add('New conversation');
-      },
-    );
-  }
-
-  void deleteConversation(BuildContext context) {
-    setState(
-      () {
-        conversations.removeAt(conversations.length - 1);
-      },
-    );
-  }
+  final isTyping = true;
 
   bool iconBool = false;
 
@@ -63,8 +49,8 @@ class _HomePageState extends State<HomePage> {
       // DRAWER IS USED TO ADD A SIDEBAR
       drawer: const MyDrawer(),
       body: SafeArea(
+        // THIS COLUMN IS USED TO ADD A LISTVIEW AND A TEXTFIELD
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             // FLEXIBLE IS USED TO MAKE THE LISTVIEW SCROLLABLE
             Flexible(
@@ -75,32 +61,38 @@ class _HomePageState extends State<HomePage> {
                     builder: (context, constraints) {
                       return Material(
                         child: Card(
-                          child: Row(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Container(
-                                  width: constraints.maxWidth * 0.08,
-                                  height: constraints.maxWidth * 0.08,
-                                  color: Colors.blue[700],
-                                  child: Center(
-                                    child: Text(
-                                      '${FirebaseAuth.instance.currentUser?.displayName?[0]}',
-                                      style: TextStyle(
-                                        fontSize: constraints.maxWidth * 0.04,
-                                        color: Colors.white,
+                                  alignment: Alignment.topLeft,
+                                  child: Container(
+                                    width: constraints.maxWidth * 0.08,
+                                    height: constraints.maxWidth * 0.08,
+                                    color: Colors.blue[700],
+                                    child: Center(
+                                      child: Text(
+                                        '${FirebaseAuth.instance.currentUser?.displayName?[0]}',
+                                        style: TextStyle(
+                                          fontSize: constraints.maxWidth * 0.04,
+                                          color: Colors.white,
+                                        ),
                                       ),
                                     ),
                                   ),
                                 ),
                               ),
-                              Expanded(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text(
-                                    conversations[index],
-                                    style: TextStyle(
-                                      fontSize: constraints.maxWidth * 0.04,
+                              SizedBox(
+                                child: Expanded(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text(
+                                      conversations[index],
+                                      style: const TextStyle(
+                                        fontSize: 18.0,
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -114,14 +106,20 @@ class _HomePageState extends State<HomePage> {
                 },
               ),
             ),
+            if (isTyping) ...[
+              const SpinKitThreeBounce(
+                color: Colors.grey,
+                size: 20.0,
+              ),
+            ],
             // MYCHATINPUTFIELD IS USED TO ADD A TEXTFIELD AND A SEND BUTTON
             MyChatInputField(
-              onSubmitted: (text) {
-                setState(
-                  () {
-                    conversations.add(text);
-                  },
-                );
+              onSubmitted: (value) {
+                if (value.isNotEmpty) {
+                  setState(() {
+                    conversations.add(value);
+                  });
+                }
               },
             ),
           ],

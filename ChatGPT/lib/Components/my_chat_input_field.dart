@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 
 class MyChatInputField extends StatefulWidget {
+  const MyChatInputField({
+    Key? key,
+    required this.onSubmitted,
+  }) : super(key: key);
   final Function(String) onSubmitted;
 
-  const MyChatInputField({Key? key, required this.onSubmitted})
-      : super(key: key);
-
   @override
-  _MyChatInputFieldState createState() => _MyChatInputFieldState();
+  State<MyChatInputField> createState() => _MyChatInputFieldState();
 }
 
 class _MyChatInputFieldState extends State<MyChatInputField> {
@@ -49,6 +50,7 @@ class _MyChatInputFieldState extends State<MyChatInputField> {
                   },
                 ),
               ),
+              textInputAction: TextInputAction.done,
               onSubmitted: (text) {
                 widget.onSubmitted(text);
                 textEditingController.clear();
