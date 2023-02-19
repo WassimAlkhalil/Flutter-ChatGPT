@@ -6,7 +6,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:chatgpt/Home/mode.dart';
 import 'package:chatgpt/MainPage/main_page.dart';
 
-import 'Splash Screen/splash_screen.dart';
+import 'SplashScreen/splash_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

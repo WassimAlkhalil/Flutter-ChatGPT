@@ -1,8 +1,7 @@
 import 'dart:async';
-import 'package:flutter/material.dart';
+import 'package:chatgpt/MainPage/toggle_signin_signup.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:lottie/lottie.dart';
-
-import '../MainPage/auth_page.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -25,8 +24,9 @@ class _SplashScreenState extends State<SplashScreen> {
       () {
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(
-            builder: (context) => const AuthenticationPage(),
+          CupertinoDialogRoute(
+            builder: (context) => const ToggleSignInSignUp(),
+            context: context,
           ),
         );
       },

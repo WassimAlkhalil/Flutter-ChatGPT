@@ -1,19 +1,20 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
 import 'package:social_login_buttons/social_login_buttons.dart';
 
 import '../../Components/my_alert_dialog.dart';
-import '../../Components/my_animated_text_kit.dart';
 import '../../Components/my_text_form_field_email.dart';
 import '../../Components/my_text_form_field_password.dart';
 import '../../Home/home.dart';
 import '../../Services/google_service.dart';
-import '../ResetPassword/reset_password.dart';
 
 class SignIn extends StatefulWidget {
-  const SignIn({Key? key, required this.showSignUp}) : super(key: key);
+  const SignIn(
+      {Key? key, required this.showSignUp, required this.showResetPassword})
+      : super(key: key);
   final VoidCallback showSignUp;
+  final VoidCallback showResetPassword;
 
   @override
   State<SignIn> createState() => _SignInState();
@@ -36,9 +37,10 @@ class _SignInState extends State<SignIn> {
         password: passwordController.text.trim(),
       );
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (context) => const HomePage(),
-        ),
+        CupertinoDialogRoute(
+            builder: (context) => const HomePage(),
+            context: context,
+          ),
       );
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
@@ -101,11 +103,19 @@ class _SignInState extends State<SignIn> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const SizedBox(
-                          height: 40.0,
-                          child: MyAnimatedTextKit(
-                            firstText: 'welcome back !',
-                            secondText: 'sign in to continue ...',
+                        const Text(
+                          'Sign in',
+                          style: TextStyle(
+                            fontSize: 30.0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 10.0),
+                        const Text(
+                          'welcome back, sign in to continue',
+                          style: TextStyle(
+                            fontSize: 15.0,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
                         const SizedBox(height: 40.0),
@@ -125,17 +135,6 @@ class _SignInState extends State<SignIn> {
                             showProgress: false,
                           ),
                         ),
-                        /*
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: const [
-                            Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 20.0),
-                              child: MyAnimatedToggleSwitch(),
-                            ),
-                          ],
-                        ),
-                        */
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -150,11 +149,7 @@ class _SignInState extends State<SignIn> {
                             // "click here" in blue color with bold font
                             TextButton(
                               onPressed: () {
-                                Navigator.of(context).pushReplacement(
-                                  MaterialPageRoute(
-                                    builder: (context) => const ResetPassword(),
-                                  ),
-                                );
+                                widget.showResetPassword();
                               },
                               child: const Text(
                                 'click here',

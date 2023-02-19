@@ -1,3 +1,5 @@
+import 'package:chatgpt/Model/message.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class MyChatInputField extends StatefulWidget {
@@ -47,6 +49,11 @@ class _MyChatInputFieldState extends State<MyChatInputField> {
                   onPressed: () {
                     widget.onSubmitted(textEditingController.text);
                     textEditingController.clear();
+                    Message(
+                      text: textEditingController.text,
+                      sender: FirebaseAuth.instance.currentUser!.displayName!,
+                      time: DateTime.now().toString(),
+                    );
                   },
                 ),
               ),

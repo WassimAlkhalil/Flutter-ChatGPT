@@ -1,9 +1,11 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:chatgpt/API/open_ai.dart';
+import 'package:chatgpt/Components/my_conversation_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import '../Components/my_chat_input_field.dart';
 import '../Drawer/drawer.dart';
+import '../Model/message.dart';
 import 'mode.dart';
 
 class HomePage extends StatefulWidget {
@@ -15,7 +17,8 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final List<String> conversations = [];
-  final isTyping = true;
+
+  final isTyping = false;
 
   bool iconBool = false;
 
@@ -59,53 +62,14 @@ class _HomePageState extends State<HomePage> {
                 itemBuilder: (context, index) {
                   return LayoutBuilder(
                     builder: (context, constraints) {
-                      return Material(
-                        child: Card(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Container(
-                                  alignment: Alignment.topLeft,
-                                  child: Container(
-                                    width: constraints.maxWidth * 0.08,
-                                    height: constraints.maxWidth * 0.08,
-                                    color: Colors.blue[700],
-                                    child: Center(
-                                      child: Text(
-                                        '${FirebaseAuth.instance.currentUser?.displayName?[0]}',
-                                        style: TextStyle(
-                                          fontSize: constraints.maxWidth * 0.04,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                child: Expanded(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text(
-                                      conversations[index],
-                                      style: const TextStyle(
-                                        fontSize: 18.0,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      );
+                      return MyConversationCard(
+                          conversation: conversations[index]);
                     },
                   );
                 },
               ),
             ),
+
             if (isTyping) ...[
               const SpinKitThreeBounce(
                 color: Colors.grey,
@@ -114,10 +78,14 @@ class _HomePageState extends State<HomePage> {
             ],
             // MYCHATINPUTFIELD IS USED TO ADD A TEXTFIELD AND A SEND BUTTON
             MyChatInputField(
-              onSubmitted: (value) {
+              onSubmitted: (value) async {
                 if (value.isNotEmpty) {
                   setState(() {
                     conversations.add(value);
+                  });
+                  Message responseMessage = await callOpenAPI(value);
+                  setState(() {
+                    conversations.add(responseMessage.text);
                   });
                 }
               },

@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:social_login_buttons/social_login_buttons.dart';
 
 import '../../Components/my_alert_dialog.dart';
-import '../../Components/my_animated_text_kit.dart';
 import '../../Components/my_text_form_field_email.dart';
 import '../../Components/my_text_form_field_password.dart';
 import '../../MainPage/verify_email.dart';
@@ -102,11 +101,19 @@ class _SignUpState extends State<SignUp> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const SizedBox(
-                          height: 40.0,
-                          child: MyAnimatedTextKit(
-                            firstText: 'good decision !',
-                            secondText: 'sign up to continue ...',
+                        const Text(
+                          'Create Account',
+                          style: TextStyle(
+                            fontSize: 30.0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 10.0),
+                        const Text(
+                          'sign up to get started',
+                          style: TextStyle(
+                            fontSize: 15.0,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
                         const SizedBox(height: 40.0),
