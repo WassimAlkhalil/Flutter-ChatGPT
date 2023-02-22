@@ -2,7 +2,8 @@ import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:chatgpt/Home/home.dart';
+
+import '../Home/home.dart';
 
 class VerifyEmail extends StatefulWidget {
   const VerifyEmail({super.key});
@@ -72,36 +73,45 @@ class _VerifyEmailState extends State<VerifyEmail> {
   Widget build(BuildContext context) => isEmailVerified
       ? const HomePage()
       : Scaffold(
-          appBar: AppBar(
-            title: const Text('Verify Email'),
-          ),
           body: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  'Please verify your email address by clicking on the link we sent to ${FirebaseAuth.instance.currentUser!.email}',
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.bold,
+            padding: const EdgeInsets.all(10.0),
+            child: Center(
+              child: Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(25.0),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        'Please verify your email address by clicking on the link we sent to ${FirebaseAuth.instance.currentUser!.email}',
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 24),
+                      ElevatedButton(
+                        onPressed: () {
+                          canResendEmail ? sendEmailVerification() : null;
+                        },
+                        child: const Text('Resend Email'),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              FirebaseAuth.instance.signOut();
+                            },
+                            child: const Text('cancel'),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
                 ),
-                const SizedBox(height: 24),
-                ElevatedButton(
-                  onPressed: () {
-                    canResendEmail ? sendEmailVerification() : null;
-                  },
-                  child: const Text('Resend Email'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    FirebaseAuth.instance.signOut();
-                  },
-                  child: const Text('cancel'),
-                ),
-              ],
+              ),
             ),
           ),
         );

@@ -1,3 +1,3 @@
-// MY PRIVATE KEY FOR THE OPENAI API
 
-const String key = "Your API Key Here";
+
+const String key = "ADD YOUR KEY HERE";

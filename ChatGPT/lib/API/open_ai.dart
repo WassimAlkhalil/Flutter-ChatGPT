@@ -18,25 +18,18 @@ Future<Message> callOpenAPI(String text) async {
     "temperature": 0
   });
 
-  try {
-    final response = await http.post(
-      Uri.parse(url),
-      headers: header,
-      body: body,
-    );
-    if (response.statusCode == 200) {
-      final data = json.decode(utf8.decode(response.bodyBytes));
-      return Message(
-          text: data['choices'][0]['text'],
-          sender: FirebaseAuth.instance.currentUser!.displayName!,
-          time: DateTime.now().toString());
-    } else {
-      return Message(
-          text: "Error Occured !",
-          sender: FirebaseAuth.instance.currentUser!.displayName!,
-          time: DateTime.now().toString());
-    }
-  } catch (e) {
+  final response = await http.post(
+    Uri.parse(url),
+    headers: header,
+    body: body,
+  );
+  if (response.statusCode == 200) {
+    final data = json.decode(utf8.decode(response.bodyBytes));
+    return Message(
+        text: data['choices'][0]['text'],
+        sender: FirebaseAuth.instance.currentUser!.displayName!,
+        time: DateTime.now().toString());
+  } else {
     return Message(
         text: "Error Occured !",
         sender: FirebaseAuth.instance.currentUser!.displayName!,

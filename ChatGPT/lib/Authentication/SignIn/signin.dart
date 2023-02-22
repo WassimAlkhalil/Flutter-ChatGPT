@@ -38,9 +38,9 @@ class _SignInState extends State<SignIn> {
       );
       Navigator.of(context).pushReplacement(
         CupertinoDialogRoute(
-            builder: (context) => const HomePage(),
-            context: context,
-          ),
+          builder: (context) => const HomePage(),
+          context: context,
+        ),
       );
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {

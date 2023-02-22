@@ -4,8 +4,13 @@ import 'package:flutter/material.dart';
 
 class MyConversationCard extends StatelessWidget {
   final String conversation;
+  final bool isUserAsking;
 
-  const MyConversationCard({super.key, required this.conversation});
+  const MyConversationCard({
+    Key? key,
+    required this.conversation,
+    required this.isUserAsking,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,39 +25,60 @@ class MyConversationCard extends StatelessWidget {
                   padding: const EdgeInsets.all(8.0),
                   child: Container(
                     alignment: Alignment.topLeft,
-                    child: Container(
-                      width: constraints.maxWidth * 0.08,
-                      height: constraints.maxWidth * 0.08,
-                      color: Colors.blue[700],
-                      child: Center(
-                        child: Text(
-                          '${FirebaseAuth.instance.currentUser?.displayName?[0]}',
-                          style: TextStyle(
-                            fontSize: constraints.maxWidth * 0.04,
-                            color: Colors.white,
+                    child: isUserAsking
+                        ? Container(
+                            width: constraints.maxWidth * 0.08,
+                            height: constraints.maxWidth * 0.08,
+                            color: Colors.blue[700],
+                            child: Center(
+                              child: Text(
+                                '${FirebaseAuth.instance.currentUser?.displayName?[0]}',
+                                style: TextStyle(
+                                  fontSize: constraints.maxWidth * 0.04,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          )
+                        : Image.asset(
+                            'assets/settings.png',
+                            width: constraints.maxWidth * 0.08,
+                            height: constraints.maxWidth * 0.08,
                           ),
-                        ),
-                      ),
-                    ),
                   ),
                 ),
-                SizedBox(
-                  child: Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: AnimatedTextKit(
-                        animatedTexts: [
-                          TypewriterAnimatedText(
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    child: isUserAsking
+                        ? Text(
                             conversation,
-                            textStyle: const TextStyle(
-                              fontSize: 18.0,
+                            style: TextStyle(
+                              fontSize: 20.0,
+                              color: Theme.of(context).brightness ==
+                                      Brightness.light
+                                  ? Colors.black
+                                  : Colors.white,
                             ),
-                            speed: const Duration(milliseconds: 50),
+                          )
+                        : DefaultTextStyle(
+                            style: TextStyle(
+                              fontSize: 20.0,
+                              color: Theme.of(context).brightness ==
+                                      Brightness.light
+                                  ? Colors.black
+                                  : Colors.white,
+                            ),
+                            child: AnimatedTextKit(
+                              animatedTexts: [
+                                TypewriterAnimatedText(
+                                  conversation,
+                                  speed: const Duration(milliseconds: 50),
+                                ),
+                              ],
+                              isRepeatingAnimation: false,
+                            ),
                           ),
-                        ],
-                        isRepeatingAnimation: false,
-                      ),
-                    ),
                   ),
                 ),
               ],
